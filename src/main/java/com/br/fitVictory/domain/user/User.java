@@ -2,12 +2,13 @@ package com.br.fitVictory.domain.user;
 
 import com.br.fitVictory.domain.atividade.Atividade;
 import com.br.fitVictory.domain.endereco.EnderecoUsuario;
-import com.br.fitVictory.domain.pontuacao.Pontuacao;
 import com.br.fitVictory.domain.temperatura.Temperatura;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "cliente_user")
@@ -22,7 +23,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
-    @Column(name = "cliente_id")
+    @Column(name = "id")
     private Long id;
 
     @Column(name = "nome")
@@ -38,10 +39,11 @@ public class User {
     private String cpf;
 
     @Column(name = "roles")
-    private List<String> roles;
+    private String roles;
 
-    @JoinColumn(name = "endereco_cliente")
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @JoinColumn(name = "endereco_id", nullable = false)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     private EnderecoUsuario enderecoUsuario;
 
     @Column(name = "temperatura")
@@ -55,22 +57,39 @@ public class User {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime cadastro;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    @JoinColumn(name = "pontuacao")
-    private Pontuacao pontuacao;
 
-    @OneToMany()
-    @JoinColumn(name = "atividades")
+    @Column(name = "pontuacao")
+    private Integer pontuacao;
+
+    @OneToMany(mappedBy = "user")
+    @Column(name = "atividades")
     private List<Atividade> atividades;
+
+    public User(UserCadastroDTO data) {
+        this.nome = data.nome();
+        this.senha = data.senha();
+        this.email = data.email();
+        this.enderecoUsuario = new EnderecoUsuario(data.enderecoUsuario());
+
+    }
+
+    public User(UserUpdateDTO data) {
+        this.nome = data.nome();
+        this.email = data.email();
+        this.senha = data.senha();
+    }
 
     @PrePersist
     public void prePersist(){
         this.cadastro = LocalDateTime.now();
+        this.pontuacao = 0;
+        this.status = true;
+        this.roles = "USER";
     }
 
     public void addAtividade(Atividade atividade){
         this.atividades.add(atividade);
-        this.pontuacao.addPontos(atividade);
+        this.pontuacao = pontuacao + atividade.getPontos();
 
     }
 }

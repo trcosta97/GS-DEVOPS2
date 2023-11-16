@@ -2,9 +2,13 @@ package com.br.fitVictory.domain.endereco;
 
 import com.br.fitVictory.domain.atividade.Atividade;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "endereco_atividade")
+@Getter
+@Setter
 public class EnderecoAtividade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

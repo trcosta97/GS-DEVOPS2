@@ -1,12 +1,16 @@
 package com.br.fitVictory.service;
 
 import com.br.fitVictory.domain.atividade.Atividade;
+import com.br.fitVictory.domain.temperatura.Temperatura;
+import com.br.fitVictory.domain.user.Roles;
 import com.br.fitVictory.domain.user.User;
 import com.br.fitVictory.exception.EntidadeNaoEncontradaException;
 import com.br.fitVictory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +21,8 @@ public class UserService {
     private UserRepository repository;
 
     public User save(User user){
+        List<Temperatura> temperaturas = new ArrayList<>();
+        user.setTemperatura(temperaturas);
         return repository.save(user);
     }
 

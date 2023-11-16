@@ -2,6 +2,7 @@ package com.br.fitVictory.domain.atividade;
 
 import com.br.fitVictory.domain.endereco.EnderecoAtividade;
 import com.br.fitVictory.domain.endereco.EnderecoUsuario;
+import com.br.fitVictory.domain.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -43,6 +44,10 @@ public class Atividade {
     @Column(name = "data_cadastro")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime cadastro;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @PrePersist
     public void prePersist(){

@@ -2,9 +2,13 @@ package com.br.fitVictory.domain.endereco;
 
 import com.br.fitVictory.domain.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "endereco_usuario")
+@Getter
+@Setter
 public class EnderecoUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +19,14 @@ public class EnderecoUsuario {
     private String estado;
     private String pais;
     private String cep;
-    @OneToOne
-    @JoinColumn(name = "usuario_id")
-    private User usuario;
 
+
+    public EnderecoUsuario(EnderecoDTO data) {
+        this.numero = data.numero();
+        this.rua = data.rua();
+        this.cidade = data.cidade();
+        this.estado = data.estado();
+        this.pais = data.pais();
+        this.cep = data.cep();
+    }
 }
