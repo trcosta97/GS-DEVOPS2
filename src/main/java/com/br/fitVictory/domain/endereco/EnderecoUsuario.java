@@ -2,13 +2,17 @@ package com.br.fitVictory.domain.endereco;
 
 import com.br.fitVictory.domain.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "endereco_usuario")
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class EnderecoUsuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

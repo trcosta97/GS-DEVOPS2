@@ -33,10 +33,6 @@ public class Atividade {
     @Column(name = "pontos")
     private Integer pontos;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status_atividade")
-    private StatusAtividade status;
-
     @JoinColumn(name = "local_atividade")
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "atividade")
     private EnderecoAtividade endereco;
@@ -48,6 +44,13 @@ public class Atividade {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    public Atividade(AtividadeCheckInDTO data) {
+        this.tipo = data.tipo();
+        this.descricao = data.descricao();
+        this.pontos = data.pontos();
+        this.endereco = new EnderecoAtividade(data.enderecoAtividade());
+    }
 
     @PrePersist
     public void prePersist(){
