@@ -5,7 +5,6 @@ import com.br.fitVictory.domain.atividade.AtividadeCheckInDTO;
 import com.br.fitVictory.domain.user.User;
 import com.br.fitVictory.domain.user.UserCadastroDTO;
 import com.br.fitVictory.domain.user.UserUpdateDTO;
-import com.br.fitVictory.service.AtividadeService;
 import com.br.fitVictory.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class UserController {
     }
 
     @PutMapping("checkIn/{id}")
-    public ResponseEntity checkIn(@PathVariable Long id, @RequestBody AtividadeCheckInDTO data){
+    public ResponseEntity<List<Atividade>> checkIn(@PathVariable Long id, @RequestBody AtividadeCheckInDTO data){
         Atividade atividade = new Atividade(data);
         service.addAtividade(id,atividade);
         List<Atividade> atividadesCadastradas = service.get(id).getAtividades();

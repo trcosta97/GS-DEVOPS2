@@ -41,7 +41,7 @@ public class Atividade {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime cadastro;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 

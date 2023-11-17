@@ -52,26 +52,32 @@ public class UserService {
                 updated.setSenha(data.getSenha());
             }
             return repository.save(updated);
+        }else if (optionalUser.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
         }
-        throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
+        return null;
     }
 
     public void delete(Long id){
         Optional<User> optionalUser = repository.findById(id);
         if(optionalUser.isPresent()){
             repository.deleteById(id);
+        }else if (optionalUser.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
         }
-        throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
     }
 
     public User addAtividade(Long userId, Atividade atividade){
         Optional<User> optionalUser = repository.findById(userId);
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
+            atividade.setUser(user);
             user.addAtividade(atividade);
             repository.save(user);
+        }else if (optionalUser.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
         }
-       throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
+       return null;
     }
 
 }

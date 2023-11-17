@@ -8,7 +8,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "cliente_user")
@@ -41,7 +40,7 @@ public class User {
     @Column(name = "roles")
     private String roles;
 
-    @JoinColumn(name = "endereco_id", nullable = false)
+    @JoinColumn(name = "endereco_id")
     @OneToOne(cascade = CascadeType.ALL)
     @JsonIgnore
     private EnderecoUsuario enderecoUsuario;
@@ -61,8 +60,8 @@ public class User {
     @Column(name = "pontuacao")
     private Integer pontuacao;
 
-    @OneToMany(mappedBy = "user")
-    @Column(name = "atividades")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Atividade> atividades;
 
     public User(UserCadastroDTO data) {
