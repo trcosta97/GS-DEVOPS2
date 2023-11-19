@@ -2,12 +2,16 @@ package com.br.fitVictory.controller;
 
 import com.br.fitVictory.domain.atividade.Atividade;
 import com.br.fitVictory.domain.atividade.AtividadeCheckInDTO;
+import com.br.fitVictory.domain.atividade.ListagemAtividadesDTO;
+import com.br.fitVictory.domain.user.ListagemUserDTO;
 import com.br.fitVictory.domain.user.User;
 import com.br.fitVictory.domain.user.UserCadastroDTO;
 import com.br.fitVictory.domain.user.UserUpdateDTO;
 import com.br.fitVictory.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -32,13 +36,13 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity getOne(@PathVariable Long id){
-        var user = service.get(id);
+        var user = new ListagemUserDTO(service.get(id));
         return ResponseEntity.ok(user);
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAll(){
-        return ResponseEntity.ok(service.getAll());
+    public ResponseEntity<Page<ListagemUserDTO>> getAll(Pageable paginacao){
+        return ResponseEntity.ok(service.getAll(paginacao).map(ListagemUserDTO::new));
     }
 
     @PutMapping("/{id}")
@@ -55,10 +59,15 @@ public class UserController {
     }
 
     @PutMapping("checkIn/{id}")
-    public ResponseEntity<List<Atividade>> checkIn(@PathVariable Long id, @RequestBody AtividadeCheckInDTO data){
+    public ResponseEntity<List<ListagemAtividadesDTO>> checkIn(@PathVariable Long id, @RequestBody AtividadeCheckInDTO data){
         Atividade atividade = new Atividade(data);
         service.addAtividade(id,atividade);
-        List<Atividade> atividadesCadastradas = service.get(id).getAtividades();
+        List<ListagemAtividadesDTO> atividadesCadastradas = service.get(id).getAtividades().stream().map(ListagemAtividadesDTO::new).toList();
         return ResponseEntity.ok(atividadesCadastradas);
+    }
+
+    @GetMapping("atividades/{id}")
+    public ResponseEntity<List<ListagemAtividadesDTO>> getAtividades(@PathVariable Long id ){
+        return ResponseEntity.ok(service.getAtividades(id).stream().map(ListagemAtividadesDTO::new).toList());
     }
 }

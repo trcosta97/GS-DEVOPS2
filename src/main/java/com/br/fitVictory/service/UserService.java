@@ -2,14 +2,14 @@ package com.br.fitVictory.service;
 
 import com.br.fitVictory.domain.atividade.Atividade;
 import com.br.fitVictory.domain.temperatura.Temperatura;
-import com.br.fitVictory.domain.user.Roles;
 import com.br.fitVictory.domain.user.User;
 import com.br.fitVictory.exception.EntidadeNaoEncontradaException;
 import com.br.fitVictory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,8 +34,8 @@ public class UserService {
         throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
     }
 
-    public List<User> getAll(){
-        return repository.findAll();
+    public Page<User> getAll(Pageable paginacao){
+        return repository.findAll(paginacao);
     }
 
     public User update(Long id, User data){
@@ -78,6 +78,18 @@ public class UserService {
             throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
         }
        return null;
+    }
+
+    public List<Atividade> getAtividades(Long userId){
+        Optional<User> optionalUser = repository.findById(userId);
+        if (optionalUser.isPresent()){
+            User foundUser = optionalUser.get();
+            List<Atividade> atividades = foundUser.getAtividades();
+            return atividades;
+        }else if (optionalUser.isEmpty()){
+            throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
+        }
+        return null;
     }
 
 }

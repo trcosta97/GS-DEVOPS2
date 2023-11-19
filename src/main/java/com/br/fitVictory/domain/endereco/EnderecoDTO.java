@@ -1,6 +1,7 @@
 package com.br.fitVictory.domain.endereco;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public record EnderecoDTO(
         String numero,
@@ -13,6 +14,7 @@ public record EnderecoDTO(
         @NotBlank(message = "Nome do país não pode ser nulo")
         String pais,
         @NotBlank(message = "CEP não pode ser nulo")
+        @Size(max = 8, min = 8, message = "CEP deve conter 8 digitos")
         String cep
 ) {
 }
