@@ -25,11 +25,9 @@ public class UserService {
     @Autowired
     private AtividadeRepository atividadeRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+
 
     public User save(User user){
-        user.setSenha(passwordEncoder.encode(user.getPassword()));
         List<Temperatura> temperaturas = new ArrayList<>();
         user.setTemperatura(temperaturas);
         return repository.save(user);
