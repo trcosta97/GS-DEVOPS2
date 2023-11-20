@@ -8,6 +8,7 @@ import com.br.fitVictory.domain.user.User;
 import com.br.fitVictory.domain.user.UserCadastroDTO;
 import com.br.fitVictory.domain.user.UserUpdateDTO;
 import com.br.fitVictory.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -67,7 +68,7 @@ public class UserController {
     }
 
     @GetMapping("atividades/{id}")
-    public ResponseEntity<List<ListagemAtividadesDTO>> getAtividades(@PathVariable Long id ){
-        return ResponseEntity.ok(service.getAtividades(id).stream().map(ListagemAtividadesDTO::new).toList());
+    public ResponseEntity<Page<ListagemAtividadesDTO>> getAtividades(@PathVariable Long id, Pageable pageable ){
+        return ResponseEntity.ok(service.getAtividades(id, pageable).map(ListagemAtividadesDTO::new));
     }
 }

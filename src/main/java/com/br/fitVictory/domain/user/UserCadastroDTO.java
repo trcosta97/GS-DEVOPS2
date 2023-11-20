@@ -15,6 +15,8 @@ public record UserCadastroDTO(
         String senha,
         @NotBlank(message = "CPF não pode ser nulo")
         String cpf,
+//        @NotBlank(message = "Role não pode ser nulo")
+        Roles role,
         EnderecoDTO enderecoUsuario
 
 

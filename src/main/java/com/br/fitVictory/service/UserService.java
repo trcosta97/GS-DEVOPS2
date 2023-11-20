@@ -4,10 +4,12 @@ import com.br.fitVictory.domain.atividade.Atividade;
 import com.br.fitVictory.domain.temperatura.Temperatura;
 import com.br.fitVictory.domain.user.User;
 import com.br.fitVictory.exception.EntidadeNaoEncontradaException;
+import com.br.fitVictory.repository.AtividadeRepository;
 import com.br.fitVictory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -20,7 +22,14 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
+    @Autowired
+    private AtividadeRepository atividadeRepository;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
     public User save(User user){
+        user.setSenha(passwordEncoder.encode(user.getPassword()));
         List<Temperatura> temperaturas = new ArrayList<>();
         user.setTemperatura(temperaturas);
         return repository.save(user);
@@ -80,16 +89,19 @@ public class UserService {
        return null;
     }
 
-    public List<Atividade> getAtividades(Long userId){
+    public Page<Atividade> getAtividades(Long userId, Pageable paginacao){
         Optional<User> optionalUser = repository.findById(userId);
         if (optionalUser.isPresent()){
-            User foundUser = optionalUser.get();
-            List<Atividade> atividades = foundUser.getAtividades();
+
+            Page<Atividade> atividades = repository.getAtividadesByUserId(userId, paginacao);
             return atividades;
         }else if (optionalUser.isEmpty()){
             throw new EntidadeNaoEncontradaException("Usuário não encontrado.");
         }
         return null;
     }
+
+
+
 
 }
