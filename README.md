@@ -1,4 +1,7 @@
 ﻿# FitVictory API
+## Arquitetura 
+![image](https://github.com/trcosta97/GS-DEVOPS2/assets/101136329/9a36208b-67be-4925-a5c0-8e03447dc2cd)
+
 
  ## Endpoints
 
