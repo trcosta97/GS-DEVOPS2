@@ -1,6 +1,22 @@
 ﻿# FitVictory API
+
+## Sobre o projeto  
+
+O FitVictory é um aplicativo de saúde e bem-estar que ajuda os usuários a alcançar seus objetivos por meio de uma combinação de informações claras e personalizadas, uma comunidade vibrante e desafios estimulantes.  
+O aplicativo oferece um chatbot especializado que responde a perguntas sobre saúde, fornece orientações personalizadas e informações atualizadas. Também oferece desafios diários e checklists que ajudam os usuários a desenvolver hábitos saudáveis e alcançar suas metas.  
+Os desafios são projetados para serem alcançáveis, mas desafiadores, proporcionando uma sensação de conquista ao serem concluídos. As listas de verificação são adaptáveis, levando em consideração as preferências e metas individuais dos usuários.  
+A pontuação de bem-estar do usuário aumenta à medida que os desafios são concluídos. Essa pontuação reflete não apenas as realizações, mas também o equilíbrio entre os diferentes aspectos do bem-estar.  
+O FitVictory é uma ferramenta poderosa que pode ajudar os usuários a alcançar seus objetivos de saúde e bem-estar. É um guia completo que oferece informações, comunidade e desafios para tornar a jornada para uma vida saudável mais envolvente e sustentável.  
+
+
 ## Arquitetura 
 ![image](https://github.com/trcosta97/GS-DEVOPS2/assets/101136329/9a36208b-67be-4925-a5c0-8e03447dc2cd)
+
+### Resourse Group
+![image](https://github.com/trcosta97/GS-DEVOPS2/assets/101136329/9c7f825c-fa03-4824-864b-651f01c5b442)
+
+### WebApp
+![image](https://github.com/trcosta97/GS-DEVOPS2/assets/101136329/711320d6-1699-4d23-a7bc-93b5eff85a95)
 
 
  ## Endpoints
