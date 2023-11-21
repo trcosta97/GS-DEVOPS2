@@ -12,7 +12,7 @@ O FitVictory é uma ferramenta poderosa que pode ajudar os usuários a alcançar
 ## Arquitetura 
 ![image](https://github.com/trcosta97/GS-DEVOPS2/assets/101136329/9a36208b-67be-4925-a5c0-8e03447dc2cd)
 
-### Resourse Group
+### Resource Group
 ![image](https://github.com/trcosta97/GS-DEVOPS2/assets/101136329/9c7f825c-fa03-4824-864b-651f01c5b442)
 
 ### WebApp
